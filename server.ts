@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import { connectDB } from "./dbConnect.ts";
 import moviesRouter from "./routes/moviesRoute.ts";
+import authRouter from "./routes/authenticationRoute.ts";
 
 async function start() {
     dotenv.config({
@@ -17,6 +18,7 @@ async function start() {
     app.use(cors());
     app.use(express.json());
 
+    app.use("/api/auth", authRouter);
     app.use("/api/movies", moviesRouter);
 
     app.listen(PORT, () => {
