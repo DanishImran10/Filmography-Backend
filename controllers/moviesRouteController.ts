@@ -1,11 +1,12 @@
 import { prisma } from "../dbConnect.ts";
 import express from "express";
+import asyncHandler from "../utils/asyncHandler.ts";
 
 type Params = {
     movieId: string
 };
     
-async function getMovies(req : express.Request, res : express.Response) {
+const getMovies = asyncHandler(async (req : express.Request, res : express.Response) => {
     const page = Number(req.query.page ?? 1);
     const limit = Number(req.query.limit ?? 20);
 
@@ -23,9 +24,9 @@ async function getMovies(req : express.Request, res : express.Response) {
         movies,
         totalPages
     });
-}
+});
 
-async function getMovieById(req : express.Request<Params>, res : express.Response) {
+const getMovieById = asyncHandler(async (req : express.Request<Params>, res : express.Response) => {
     const { movieId } = req.params;
     
     const movie = await prisma.movie.findFirst({
@@ -35,9 +36,9 @@ async function getMovieById(req : express.Request<Params>, res : express.Respons
     });
 
     res.status(200).json(movie);
-}
+});
 
-async function getTrendingMovies(req: express.Request, res: express.Response) {
+const getTrendingMovies = asyncHandler(async (req: express.Request, res: express.Response) => {
     const movies = await prisma.movie.findMany({
         select: {
             id: true,
@@ -52,6 +53,6 @@ async function getTrendingMovies(req: express.Request, res: express.Response) {
         }
     });
     res.status(200).json(movies);
-}
+});
 
 export { getMovies, getMovieById, getTrendingMovies };
