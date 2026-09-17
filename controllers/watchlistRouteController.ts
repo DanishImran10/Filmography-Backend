@@ -54,47 +54,46 @@ const getMovies = asyncHandler(async (req: Request, res: Response) => {
         where: {
             userId
         },
+        include: {
+            movie: {
+                select: {
+                    title: true,
+                    imdbRating: true,
+                    year: true,
+                    runtime: true,
+                    director: true,
+                    posterUrl: true
+                }
+            }
+        },
         orderBy: {
             createdAt: "desc"
         }
     });
 
-    return res.status(200).json({
-        data: movies
-    });
+    return res.status(200).json(movies);
 });
 
 const deleteMovie = asyncHandler(async (req: Request, res: Response) => {
-    const { id } = req.params as {id: string};
+    const { movieId } = req.params as {movieId: string};
+    const { userId } = req.body;
     
-    const watchlistEntry = await prisma.watchlistEntry.findUnique({
+    const result = await prisma.watchlistEntry.deleteMany({
         where: {
-            id
+            userId,
+            movieId
         }
     });
 
-    if (!watchlistEntry)
+    if (result.count === 0)
     {
         return res.status(404).json({
-            error: "No such watchlist entry exists!"
+            error: "Movie doesn't exist in the watchlist!"
         });
     }
-
-    if (watchlistEntry.userId !== req.body.userId)
-    {
-        return res.status(404).json({
-            error: "Specified entry doesn't belong to the current user!"
-        });
-    }
-
-    await prisma.watchlistEntry.delete({
-        where: {
-            id: id
-        }
-    });
 
     return res.status(201).json({
-        message: "Movie removed from the watchlist!"
+        message: "Movie removed from the watchlist!",
     });
 });
 

@@ -13,12 +13,14 @@ watchlistRouter.use("/", (req: Request, res: Response, next: NextFunction) => {
     else if (result.user === null)
         return res.status(500).json({error: "Unknown error occurred!"});
 
+    if (!req.body)
+        req.body = {};
     req.body.userId = result.user.id;
     next();
 });
 
 watchlistRouter.post("/", addMovie);
 watchlistRouter.get("/", getMovies);
-watchlistRouter.delete("/:id", deleteMovie);
+watchlistRouter.delete("/:movieId", deleteMovie);
 
 export default watchlistRouter;
