@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getMovies, getMovieById, getTrendingMovies } from "../controllers/moviesRouteController.ts";
+import { getMovies, getMovieById, getTrendingMovies, getMoviesByName } from "../controllers/moviesRouteController.ts";
 import type { Request, Response, NextFunction } from "express";
 import decodeToken from "../utils/decodeToken.ts";
 
@@ -21,6 +21,7 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
 
 moviesRouter.get("/", authMiddleware, getMovies);
 moviesRouter.get("/trending", getTrendingMovies);
+moviesRouter.get("/search", getMoviesByName);
 moviesRouter.get("/:movieId", authMiddleware, getMovieById);
 
 export default moviesRouter;
