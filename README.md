@@ -1,8 +1,4 @@
-
 # ⚙️ Backend README
-
-```md
-# Movie Watchlist Backend
 
 A RESTful API backend for a movie watchlist application built using **Node.js, Express, TypeScript, PostgreSQL, and Prisma ORM**. This backend handles authentication, movie data management, watchlist functionality, search, and pagination.
 
@@ -87,3 +83,22 @@ src/
   │     └── schema.prisma
   ├── dbConnect.ts
   └── server.ts
+```
+---
+
+## Deployed Backend
+
+Live API: https://filmography-backend.onrender.com
+
+> Note: Hosted on free tier (Render), may experience cold starts.
+
+---
+
+## Getting Started
+
+```bash
+npm install
+npm run dev
+```
+
+---
