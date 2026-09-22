@@ -18,7 +18,7 @@ async function start() {
     await connectDB();
 
     const allowedOrigins = [
-        "http:localhost:5173",
+        "http://localhost:5173",
         "https://filmography-frontend.onrender.com"
     ];
 
