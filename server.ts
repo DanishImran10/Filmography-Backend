@@ -18,7 +18,7 @@ async function start() {
     await connectDB();
 
     app.use(cors({
-        origin: "http://localhost:5173",
+        origin: "https://filmography-frontend.onrender.com",
         credentials: true
     }));
     app.use(cookieParser());
